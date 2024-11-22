@@ -1,13 +1,7 @@
 from abc import ABC, abstractmethod
 import requests
 import json
-
-
-class JobAPI(ABC):
-    @abstractmethod
-    def get_vacancies(self, keyword):
-        """Метод для получения вакансий по ключевому слову"""
-        pass
+from src.jobapi_cls import JobAPI
 
 
 class HeadhunterAPI(JobAPI):
@@ -38,7 +32,7 @@ class Vacancy:
     def __str__(self):
         return f"{self.title} - {self.salary} руб.\n{self.url}\nОписание: {self.description}\n"
 
-    def comparison(self, other):
+    def __lt__(self, other):
         return self.salary > other.salary
 
 
@@ -71,30 +65,3 @@ class JSONVacancyStorage(VacancyStorage):
                 return [Vacancy(**item) for item in data]
         except:
             print('Файл не найден')
-
-
-def main():
-
-    job_title = input('Введите название вакансии: ')
-    top_vacancy = int(input('Введите сколько вакансий, отсортированных по зарплате вам нужно: '))
-
-    hh_api = HeadhunterAPI()
-    raw_vacancies = hh_api.get_vacancies(job_title, top_vacancy)
-
-    storage = JSONVacancyStorage('sample.json')
-
-    vacancies = []
-
-    for item in raw_vacancies:
-        if 'salary' not in item or item['salary'] is None:
-            item['salary'] = 'Зарплата не указана'
-        vacancy = Vacancy(item['name'], item['alternate_url'], item['salary'], item['snippet'])
-        vacancies.append(vacancy)
-        print()
-        print(vacancy.__dict__)
-        print()
-
-    storage.save_to_file(vacancies)
-
-
-main()
