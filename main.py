@@ -1,4 +1,6 @@
-from src.headhunt_cls import HeadhunterAPI, JSONVacancyStorage, Vacancy
+from src.headhunterapi import HeadhunterAPI
+from src.jsonvacancystorage import JSONVacancyStorage
+from src.vacancy import Vacancy
 
 
 def main():
