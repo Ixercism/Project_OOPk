@@ -6,4 +6,3 @@ class JobAPI(ABC):
     def get_vacancies(self, keyword):
         """Метод для получения вакансий по ключевому слову"""
         pass
-

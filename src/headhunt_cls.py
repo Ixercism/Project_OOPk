@@ -1,25 +1,23 @@
-from abc import ABC, abstractmethod
-import requests
 import json
+from abc import ABC, abstractmethod
+
+import requests
+
 from src.jobapi_cls import JobAPI
 
 
 class HeadhunterAPI(JobAPI):
     def get_vacancies(self, keyword, vacancies_count):
-        BASE_URL = 'https://api.hh.ru/vacancies'
+        BASE_URL = "https://api.hh.ru/vacancies"
 
-        params = {
-            'text': keyword,
-            'area': 113,
-            'per_page': vacancies_count
-        }
+        params = {"text": keyword, "area": 113, "per_page": vacancies_count}
 
         response = requests.get(BASE_URL, params=params)
 
         if response.status_code == 200:
-            return response.json()['items']
+            return response.json()["items"]
         else:
-            return f'Ошибка при получении данных. Код ошибки: {response.status_code}'
+            return f"Ошибка при получении данных. Код ошибки: {response.status_code}"
 
 
 class Vacancy:
@@ -55,13 +53,18 @@ class JSONVacancyStorage(VacancyStorage):
         self.filename = filename
 
     def save_to_file(self, vacancies):
-        with open(self.filename, 'w', encoding='utf-8') as file:
-            json.dump([vacancy.__dict__ for vacancy in vacancies], file, ensure_ascii=False, indent=4)
+        with open(self.filename, "w", encoding="utf-8") as file:
+            json.dump(
+                [vacancy.__dict__ for vacancy in vacancies],
+                file,
+                ensure_ascii=False,
+                indent=4,
+            )
 
     def load_from_file(self):
         try:
-            with open(self.filename, 'r', encoding='utf-8') as file:
+            with open(self.filename, "r", encoding="utf-8") as file:
                 data = json.load(file)
                 return [Vacancy(**item) for item in data]
-        except:
-            print('Файл не найден')
+        except Exception(FileNotFoundError):
+            print("Файл не найден")
