@@ -5,11 +5,14 @@ from src.vacancy import Vacancy
 
 
 class JSONVacancyStorage(VacancyStorage):
+    """Класс для работы с JSON файлами"""
 
     def __init__(self, filename="vacancies.json"):
         self.filename = filename
 
     def save_to_file(self, vacancies):
+        """Метод для сохранения вакансий в файл"""
+
         with open(self.filename, "w", encoding="utf-8") as file:
             json.dump(
                 [vacancy.__dict__ for vacancy in vacancies],
@@ -19,6 +22,8 @@ class JSONVacancyStorage(VacancyStorage):
             )
 
     def load_from_file(self):
+        """Метод для загрузки вакансий из файла"""
+
         try:
             with open(self.filename, "r", encoding="utf-8") as file:
                 data = json.load(file)

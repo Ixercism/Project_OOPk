@@ -4,7 +4,11 @@ from src.jobapi_cls import JobAPI
 
 
 class HeadhunterAPI(JobAPI):
+    """Класс для взаимодействия с API HH"""
+
     def get_vacancies(self, keyword, vacancies_count):
+        """Метод для получения вакансий"""
+
         BASE_URL = "https://api.hh.ru/vacancies"
 
         params = {"text": keyword, "area": 113, "per_page": vacancies_count}

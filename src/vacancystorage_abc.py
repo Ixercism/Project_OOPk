@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 
 
 class VacancyStorage(ABC):
+    """Абстрактный класс для работы с файлами"""
 
     @abstractmethod
     def save_to_file(self, vacancies):

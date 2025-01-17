@@ -4,6 +4,7 @@ from src.vacancy import Vacancy
 
 
 def main():
+    """Функция - точка входа в программу"""
     job_title = input("Введите название вакансии: ")
     top_vacancy = int(
         input("Введите сколько вакансий, отсортированных по зарплате вам нужно: ")
