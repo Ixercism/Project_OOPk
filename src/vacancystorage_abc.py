@@ -13,3 +13,9 @@ class VacancyStorage(ABC):
     def load_from_file(self):
         """Метод для загрузки вакансий из файла"""
         pass
+
+    @abstractmethod
+    def delete_from_file(self) -> None:
+        """Общий функционал для удаления данных из файла"""
+
+        pass
