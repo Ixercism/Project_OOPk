@@ -1,5 +1,6 @@
 class Vacancy:
     """Класс для обработки вакансий"""
+
     def __init__(self, title, url, salary, description):
         """Создание экземпляра класса"""
         self.title = title

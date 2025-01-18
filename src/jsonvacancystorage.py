@@ -13,14 +13,17 @@ class JSONVacancyStorage(VacancyStorage):
     def save_to_file(self, vacancies):
         """Метод для сохранения вакансий в файл"""
 
-        # new_vacancies = [vacancy.__dict__ for vacancy in vacancies]
-        # old_vacancies = self.load_from_file()
-        # for vac in old_vacancies:
-        #     vac_obj = Vacancy(vac["title"], vac["url"], vac["salary"], vac["description"])
-        #     vacancies.append(vac_obj)
+        new_vacancies = []
+        try:
+            old_vacancies = self.load_from_file()
+        except Exception:
+            old_vacancies = []
         with open(self.filename, "w", encoding="utf-8") as file:
+            if old_vacancies is not None:
+                new_vacancies.extend(old_vacancies)
+            new_vacancies.extend(vacancies)
             json.dump(
-                [vacancy.__dict__ for vacancy in vacancies],
+                [vacancy.__dict__ for vacancy in new_vacancies],
                 file,
                 ensure_ascii=False,
                 indent=4,
@@ -33,7 +36,7 @@ class JSONVacancyStorage(VacancyStorage):
             with open(self.filename, "r", encoding="utf-8") as file:
                 data = json.load(file)
                 return [Vacancy(**item) for item in data]
-        except Exception(FileNotFoundError):
+        except FileNotFoundError:
             print("Файл не найден")
 
     def delete_from_file(self) -> None:
