@@ -17,14 +17,9 @@ def main():
     vacancies = []
 
     for item in raw_vacancies:
-        salary_dict = item.get("salary")
-        if salary_dict is not None:
-            salary = salary_dict.get("from")
-            if salary is None:
-                salary = 0
-        else:
-            salary = 0
-        vac_obj = Vacancy(item["name"], item["alternate_url"], salary, item["snippet"])
+        vac_obj = Vacancy(
+            item["name"], item["alternate_url"], item["salary"], item["snippet"]
+        )
         vacancies.append(vac_obj)
 
     sorted_vacancies = sorted(vacancies)

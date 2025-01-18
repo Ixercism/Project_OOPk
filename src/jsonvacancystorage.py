@@ -1,7 +1,7 @@
 import json
 
-from src.vacancystorage_abc import VacancyStorage
 from src.vacancy import Vacancy
+from src.vacancystorage_abc import VacancyStorage
 
 
 class JSONVacancyStorage(VacancyStorage):
